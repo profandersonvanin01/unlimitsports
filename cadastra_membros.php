@@ -217,8 +217,8 @@
 	<!--  Magnific Popup-->
 	<script src="plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
 	<!-- Form Validator -->
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 	
 	<script src="js/script.js"></script>
 
