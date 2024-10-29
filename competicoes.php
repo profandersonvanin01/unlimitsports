@@ -59,7 +59,7 @@
 				<form id="formulario" action="cadastra_competicao.php" method="POST">
 					<div class="container">
 						<div id="competicaoSelect">
-							<select id="competicao" name="competicao">
+							<select id="competicao" name="competicao" onchange="checkForm()">
 								<option value="">Escolha uma competição</option>
 								<?php								
 									include 'conecta.php';
@@ -82,7 +82,7 @@
 						<div id="categorySelectContainer" class="hidden">
 							<label for="category">Selecione a Categoria:</label>
 							<!--Select alimentado pela busca no banco, com as categorias disponiveis sobre a competição criada pelo administrador da competição -->
-							<select id="category" name="categoria">
+							<select id="category" name="categoria" onchange="checkForm()">
 								<?php								
 									// String SQL para selecionar a categoria
 									$sql2 = "SELECT * FROM categorias";
@@ -96,7 +96,7 @@
 
 						<div id="formatoEquipeContainer" class="hidden">
 							<label for="formato">Selecione o formato de sua equipe:</label>		
-							<select id="formato" name="formato_equipe">
+							<select id="formato" name="formato_equipe" onchange="checkForm()">
 								<?php								
 									// String SQL para selecionar a formato da equipe
 									$sql3 = "SELECT * FROM formato_equipe";
@@ -113,7 +113,7 @@
 							<div class="main-wrapper">
 								<h3 class="centered-title">Formulário de Inscrição</h3>
 								<label for="teamName">Nome da Equipe:</label>
-								<input type="text" id="nome_equipe" name="nome_equipe" placeholder="Digite o nome da equipe">								
+								<input type="text" id="nome_equipe" name="nome_equipe" placeholder="Digite o nome da equipe" oninput="checkForm()">								
 							</div>
 						</div>
 						<button type="submit">Enviar</button>
@@ -146,6 +146,28 @@
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 	
 	<script src="js/script.js"></script>
+
+	<script>
+		function checkForm() {
+			const competicao = document.getElementById('competicao').value;
+			const categoria = document.getElementById('category').value;
+			const formato = document.getElementById('formato').value;
+			const nomeEquipe = document.getElementById('nome_equipe').value;
+			
+			if (competicao && categoria && formato && nomeEquipe) {
+				document.getElementById('submitBtn').style.display = 'block';
+			} else {
+				document.getElementById('submitBtn').style.display = 'none';
+			}
+		}
+
+		// Exibir categorias e formatos após seleção de competição
+		document.getElementById('competicao').addEventListener('change', function() {
+			document.getElementById('categorySelectContainer').classList.remove('hidden');
+			document.getElementById('formatoEquipeContainer').classList.remove('hidden');
+			checkForm(); // Verifica o formulário ao mudar
+		});
+	</script>
 
 </body>
 

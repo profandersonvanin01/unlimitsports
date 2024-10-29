@@ -100,6 +100,7 @@
 								<div id="membros"><div>	
 
 								<script>
+									let inputsFilled = 0; // Contador de inputs preenchidos
 									function gerarInputs() {
 										// Obtém o valor selecionado no select
 										const qtde = parseInt(document.getElementById('formato').textContent);
@@ -108,6 +109,7 @@
 										
 										// Limpa o container para evitar duplicação de inputs
 										inputsContainer.innerHTML = '';
+										inputsFilled = 0; // Resetar o contador
 
 										// Cria a quantidade de inputs especificada
 										for (let i = 1; i <= qtde; i++) {
@@ -121,6 +123,10 @@
 											inputNome.setAttribute('name', 'membro_nome[]');
 											inputNome.setAttribute('id', 'nome_' + i);
 											inputNome.setAttribute('placeholder', `Nome do membro ${i}`);
+											inputNome.oninput = function() {
+												this.value = this.value.toUpperCase(); // Converte para maiúsculas
+												checkInputs(); // Chama a função de validação
+											};
 											
 											// Cria o rótulo e o campo de input para CPF
 											const labelCpf = document.createElement('label');
@@ -131,7 +137,12 @@
 											inputCpf.setAttribute('type', 'text');
 											inputCpf.setAttribute('name', 'membro_cpf[]');
 											inputCpf.setAttribute('id', 'cpf_' + i);
-											inputCpf.setAttribute('placeholder', `CPF do membro ${i}`);
+											inputCpf.setAttribute('placeholder', `DIGITE SOMENTE NÚMEROS`);
+
+											// Aplicar máscara ao CPF
+											$(inputCpf).mask('000.000.000-00');
+
+											inputCpf.oninput = checkInputs; // Adiciona o evento de validação
 											
 											// Cria o rótulo e o campo de input para E-mail
 											const labelEmail = document.createElement('label');
@@ -143,6 +154,8 @@
 											inputEmail.setAttribute('name', 'membro_email[]');
 											inputEmail.setAttribute('id', 'email_' + i);
 											inputEmail.setAttribute('placeholder', `E-mail do membro ${i}`);
+
+											inputEmail.oninput = checkInputs; // Adiciona o evento de validação
 											
 											// Adiciona os rótulos e os inputs ao container
 											inputsContainer.appendChild(labelNome);
@@ -159,11 +172,24 @@
 											
 											inputsContainer.appendChild(document.createElement('br')); // Quebra de linha para separar membros
 										}
+
+										checkInputs(); // Chama a função para verificar inputs na geração inicial
+									}
+									function checkInputs() {
+										const inputs = document.querySelectorAll('#membros input');
+										inputsFilled = Array.from(inputs).filter(input => input.value).length;
+
+										// Se todos os inputs estiverem preenchidos, mostra o botão
+										if (inputsFilled === inputs.length) {
+											document.getElementById('submitBtn').style.display = 'block';
+										} else {
+											document.getElementById('submitBtn').style.display = 'none';
+										}
 									}
 								</script>
 							</div>
 						</div>
-						<button type="submit">Enviar</button>
+						<button type="submit" id="submitBtn" style="display:none;">Enviar</button>
 					</div>
 				</form>
 				
@@ -182,6 +208,8 @@
 
 	<!-- Main jQuery -->
 	<script src="plugins/jquery/jquery.js"></script>
+	<!-- Mascara CPF -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 	<!-- Bootstrap 4.3.1 -->
 	<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
 	<!-- Slick Slider -->

@@ -12,5 +12,6 @@
         $consulta = "INSERT INTO atletas (nome_atleta,email_atleta,cpf_atleta,fk_equipe_id_equipe) VALUES ('$nomes_membros[$i]','$emails_membros[$i]','$cpfs_membros[$i]','$id_equipe')";
         $conn->query($consulta);
     }
-    echo "INSCRIÇÃO FINALIZADA!";
+    //echo "INSCRIÇÃO FINALIZADA!";
+    header('Location: final.php');
 ?>
